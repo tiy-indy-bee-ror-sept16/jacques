@@ -14,5 +14,6 @@ class ActiveSupport::TestCase
   def teardown
     DatabaseCleaner.clean
   end
+  ActiveRecord::Migration.maintain_test_schema!
 
 end
