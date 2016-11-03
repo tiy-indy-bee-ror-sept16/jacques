@@ -10,7 +10,14 @@ class NotesController < ApplicationController
   end
 
   def create
-    
+    @note=note.new(note_params)
+    if @note.save
+      if @user
+        render json:@note
+      end
+      else
+        render json [""], status: 400
+    end
     render json: @notes
   end
 

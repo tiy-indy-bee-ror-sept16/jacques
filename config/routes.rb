@@ -6,6 +6,7 @@ Rails.application.routes.draw do
         # post  '/notes/tag/De-engineered'
         # get   '/notes.json'
         # get   '/notes/tag/(:id)'
+        
         resources :tags
         resources :notes
     end
