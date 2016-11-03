@@ -3,4 +3,9 @@ class Tag < ApplicationRecord
 
   has_many :taggings
   has_many :notes, through: :taggings
+
+  def to_param
+    name
+  end
+
 end
