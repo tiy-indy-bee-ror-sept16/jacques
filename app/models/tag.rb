@@ -1,7 +1,7 @@
 class Tag < ApplicationRecord
 
-  has_many :taggings,
-  has_many :notes,
-  validate_presence_of :name
+  has_many :taggings
+  has_many :notes, through: :taggings
+  validates_presence_of :name
 
 end
