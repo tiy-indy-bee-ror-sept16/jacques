@@ -18,7 +18,6 @@ class ExplorerTest < ActionDispatch::IntegrationTest
   def test_it_should_be_in_the_correct_format
     get '/api/notes.json'
     json = JSON.parse(response.body)
-    byebug
     assert json['notes'].first == example_note(Note.first),
       json['notes'].first.inspect + "\n\n" + example_note(Note.first).inspect
   end

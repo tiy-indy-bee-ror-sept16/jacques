@@ -22,8 +22,8 @@ end
 private
 
 def check_tags
-  array = params[:tags].split(",")
-  array.each{ |tag| @note.tags << Tag.create(name: tag.strip) }
+  array = params[:tags].split(", ")
+  # array.each{ |tag| @note.tags << Tag.create(name: tag.strip) }
 end
 
 
