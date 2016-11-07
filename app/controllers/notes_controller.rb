@@ -9,9 +9,9 @@ class NotesController < ApplicationController
     @note = Note.new(note_params)
     if @note.save
       tag_names
-      render json: @note, status: :created, location: @post
+      render json: @note
     else
-      render json: @note.errors.full_messages, status: :bad_request
+      render json: {errors: @note.errors.full_messages.collect {|e| {error: e}}}, status: 400
     end
   end
 
@@ -22,7 +22,7 @@ private
   end
 
   def tag_names
-    tags = params[:tags].split(", ")
+    tags = params[:tags].split(",").collect(&:strip)
     tags.each do |tag|
       @note.tags << Tag.create(name:tag)
     end
