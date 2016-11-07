@@ -14,8 +14,7 @@ class NotesController < ApplicationController
       end
       render json: @note
     else
-      errors = @note.errors.full_messages.collect{|e| {error: e} }
-      render json: errors[0][:error], status: 400
+      render json: {errors: @note.errors.full_messages.map{|e| {error: e}}}, status: 400
     end
   end
 
