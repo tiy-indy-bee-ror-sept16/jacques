@@ -6,4 +6,5 @@ class Note < ApplicationRecord
 
 
 
+
 end
