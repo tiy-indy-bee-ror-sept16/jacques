@@ -10,18 +10,20 @@ class NotesController < ApplicationController
       check_tags
       render json: @note
     else
-      render json: {errors: @note.errors.full_message.map { |e| { error: e } } }, status: 400
+      render json: {errors: @note.errors.full_messages.map{ |e| { error: e } } }, status: 400
+
     end
   end
 
-  def note_params
-    params.permit(:title, :body)
-  end
 
   private
 
   def check_tags
-    array = params[:tags].split(', ')
-    array.each { |tag| @note.tags << Tag.create(name: tag.strip) }
+    array = params[:tags].split(', ').collect(&:strip)
+    array.each { |tag| @note.tags << Tag.find_or_initialize_by(name: tag) }
+  end
+
+  def note_params
+    params.permit(:title, :body, :tag)
   end
 end
