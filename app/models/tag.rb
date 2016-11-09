@@ -1,6 +1,6 @@
 class Tag < ApplicationRecord
 
-  default_scope {order(name: :desc)}
+  default_scope { order(name: :desc) }
 
   has_many :taggings
   has_many :notes, through: :taggings
