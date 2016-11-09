@@ -11,7 +11,7 @@ class NotesController < ApplicationController
     @note = Note.new(note_params)
     if @note.save
       params[:tags].split(',').map(&:strip).each do |tag|
-        @note.tags << Tag.find_or_initialize_by(name:tag)
+        @note.tags << Tag.create(name:tag)
       end
       render json: @note
     else
