@@ -5,20 +5,17 @@ class NotesController < ApplicationController
     render json: @notes
   end
 
-  def new
-    @note = Note.new
-  end
+
 
   def create
     @note = Note.new(note_params)
     if @note.save
-      params[:tags].split(',').each do |t|
-        add = Tag.find_or_initialize_by(name: t.strip)
-        @note.tags << add
+      params[:tags].split(',').map(&:strip).each do |tag|
+        @note.tags << Tag.find_or_initialize_by(name:tag)
       end
-      render json: @notes
+      render json: @note
     else
-        render json: @notes.errors, status: 400
+        render json: {errors: @note.errors.full_messages.map{|e| {error: e}}}, status: 400
     end
   end
 
@@ -27,6 +24,6 @@ class NotesController < ApplicationController
   private
 
   def note_params
-    params.permit(:title, :body)
+    params.permit(:title, :body, :tag)
   end
 end
