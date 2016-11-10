@@ -1,30 +1,28 @@
 class NotesController < ApplicationController
-
-  def index
-    @notes=Note.all
-    render json: @notes
-  end
-
-  def new
-    @note=note.new
-  end
-
-  def create
-    @note=note.new(note_params)
-    if @note.save
-      if @user
-        render json:@note
-      end
-      else
-        render json [""], status: 400
+    def index
+        @notes = Note.all
+        render json: @notes
     end
-    render json: @notes
-  end
 
+    def create
+        @note = Note.new(note_params)
+        if @note.save
+            tags = params[:tags].split(',').collect(&:strip)
+            tags.each do |tag|
+                @note.tags << Tag.create(name:tag)
+            end
+            render json: @note
+        else
+            render json: {errors: @note.errors.full_messages.collect { |e| {error: e}}}, status: 400
+        end
+    end
 
-  def destroy
+    def destroy
+    end
 
-  end
+    private
 
-
+    def note_params
+        params.permit(:title, :body, :tag)
+    end
 end
