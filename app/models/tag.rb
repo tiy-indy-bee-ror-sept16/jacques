@@ -7,8 +7,10 @@ class Tag < ApplicationRecord
 
 
 
-  def show
-  end
+
+default_scope { order(name: :desc) }
+
+
 
 
 end
