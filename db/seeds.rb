@@ -5,3 +5,22 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+#fill Notes (title, body )
+@notes = 25.times.collect do
+  Note.create(
+    title: Faker::Book.title,
+    body: Faker::Lorem.sentence
+    )
+end
+@tags = 30.times.collect do
+  Tag.create(
+    name: Faker::Book.genre
+    )
+end
+50.times do
+  Tagging.create(
+    note: @notes.sample,
+    tag: @tags.sample
+    )
+end

@@ -20,13 +20,14 @@ gem 'active_model_serializers', '~> 0.10.0'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
+#faker used to generate data to test
+gem 'faker'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'shoulda'
   gem 'factory_girl_rails', '~> 4.0'
-  gem 'faker'
   gem 'database_cleaner'
 end
 
