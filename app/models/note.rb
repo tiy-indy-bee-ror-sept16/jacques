@@ -7,6 +7,6 @@ class Note < ApplicationRecord
                 presence: true
 
   validates_presence_of :body,
-              presence: true
+                presence: true
 
 end

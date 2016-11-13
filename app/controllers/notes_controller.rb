@@ -6,6 +6,12 @@ def index
 end
 
 
+def show
+  @note = Note.find(params[:id])
+  render json: @note
+end
+
+
 def create
   @note = Note.new(note_params)
     if @note.save
