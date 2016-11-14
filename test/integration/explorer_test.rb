@@ -11,6 +11,9 @@ class ExplorerTest < ActionDispatch::IntegrationTest
     get '/api/notes.json'
     assert_equal 200, status
     json = JSON.parse(response.body)
+    # puts json.inspect
+    # json = [1,2,3,4,5]
+    # json['thing']
     assert json['notes']
     assert json['notes'].length == 10
   end
@@ -26,6 +29,7 @@ class ExplorerTest < ActionDispatch::IntegrationTest
     note = Note.first
     get "/api/notes/tag/#{note.tags.first.name}"
     json = JSON.parse(response.body)
+    # puts json.inspect
     assert_equal note.tags.first.name, json['tag']['name']
     assert_equal example_note(Note.first), json['tag']['notes'].first
   end
