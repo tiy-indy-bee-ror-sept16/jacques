@@ -4,6 +4,11 @@ class NotesController < ApplicationController
         render json: @notes
     end
 
+    def show
+        @tag = Tag.find_by(name: params[:id])
+        render json: @tag, include: "notes.tags"
+    end
+
     def create
         @note = Note.new(note_params)
         if @note.save
