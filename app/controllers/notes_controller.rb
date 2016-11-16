@@ -5,8 +5,9 @@ class NotesController < ApplicationController
     end
 
     def show
-        @tag = Tag.find_by(name: params[:id])
-        render json: @tag, include: "notes.tags"
+        
+        @note = Note.find(params[:id])
+        render json: @note
     end
 
     def create
