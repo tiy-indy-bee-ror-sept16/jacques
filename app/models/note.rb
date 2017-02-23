@@ -1,12 +1,10 @@
 class Note < ApplicationRecord
-
   has_many :taggings
   has_many :tags, through: :taggings
 
   validates_presence_of :title,
-                presence: true
+                        presence: true
 
   validates_presence_of :body,
-                presence: true
-
+                        presence: true
 end
