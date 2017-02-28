@@ -55,6 +55,31 @@ class ExplorerTest < ActionDispatch::IntegrationTest
     assert_equal "Title can't be blank", json['errors'].first['error']
   end
 
+  def test_user_creation
+    post '/api/users/create',
+      params: {
+        username: Faker::Internet.user_name,
+        email: Faker::Internet.safe_email,
+        password: Faker::Internet.password
+      }
+    assert response.ok?
+    json = JSON.parse(response.body)
+    refute json["user"]["email"].blank?
+    refute json["user"]["api_token"].blank?
+  end
+
+  def test_user_notes
+    user = build(:user_with_notes)
+    get "/api/notes",
+      params: {
+        api_token: user.api_token
+      }
+    assert response.ok?
+    json = JSON.parse(response.body)
+    assert_equal user.notes.count, json["notes"].length
+    assert_equal example_note(user.notes.last), json["notes"].last
+  end
+
 
   private
 
@@ -64,7 +89,8 @@ class ExplorerTest < ActionDispatch::IntegrationTest
       "body"        => note.body,
       "created_at"  => note.created_at.to_formatted_s(:iso8601),
       "updated_at"  => note.updated_at.to_formatted_s(:iso8601),
-      "tags"        => note.tags.map { |t| {"name" => t.name} }
+      "tags"        => note.tags.map { |t| {"name" => t.name} },
+      "user"        => note.user ? {"username" => note.user.username} : nil
     }
   end
 
