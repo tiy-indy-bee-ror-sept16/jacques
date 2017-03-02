@@ -12,6 +12,7 @@ class NotesController < ApplicationController
   def create
     @note = Note.new(note_params)
     if @note.save
+      # Make tags
       render json: @note
     else
       render json: {errors: @note.errors.full_messages.map{|e| {error: e}}}, status: 400
