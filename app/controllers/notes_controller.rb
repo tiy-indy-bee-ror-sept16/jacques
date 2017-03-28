@@ -1,10 +1,14 @@
 class NotesController < ApplicationController
 
   def index
+    Rails.logger.info params[:q].inspect
     if current_user
-      @notes = current_user.notes
+      @notes = current_user.notes.ransack(params[:q]).result
     else
-      @notes = Note.all
+      @notes = Note.ransack(params[:q]).result
+    end
+    if params[:search]
+      @notes = @notes.search_title_and_body(params[:search])
     end
     render json: @notes
   end

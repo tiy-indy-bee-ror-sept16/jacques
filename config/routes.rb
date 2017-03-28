@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   scope :api do
     resources :notes, only: [:create, :index]
     resources :users, only: [:create]
